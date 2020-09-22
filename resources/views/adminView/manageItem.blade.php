@@ -40,7 +40,13 @@
                     <td>{{ $item->category }}</td>
                     <td>{{ $item->price }}</td>
                     <td>{{ $item->stock }}</td>
-                    <td><img src="{{asset('storage/'.$item->photo)}}" alt="img" srcset="" width="160px"></td>
+                    <td>
+                        @if ($item->photo == null)
+                            No Photo
+                        @else
+                            <img src="{{asset('storage/'.$item->photo)}}" alt="img" srcset="" width="160px">
+                        @endif
+                    </td>
                     <td><a href="{{ route('updateItemView',['id' => $item->id]) }}" class="btn btn-primary btn-block">Edit</a></td>
                     <td>
                         <form action="{{ route('deleteItem',['id' => $item->id]) }}" method="post">
