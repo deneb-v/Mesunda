@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('invoiceListView') }}">Invoice List</a>
+    </li>
+@endsection
+
 @section('navbar-right')
     <form id="cart" method="post" action="{{ route('checkOut') }}" >
         {{ csrf_field() }}

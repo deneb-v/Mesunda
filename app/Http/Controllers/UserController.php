@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\InvoiceDetail;
 use App\InvoiceHeader;
 use App\Item;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redirect;
@@ -80,5 +81,17 @@ class UserController extends Controller
             Item::reduceStock($req->item[$x], $req->quantity[$x]);
         }
         return redirect(route('user'))->with('success','Invoice saved!');
+    }
+
+    public function invoiceListView(){
+        $data = InvoiceHeader::getAllData();
+        return view('userView.invoiceList', ['data' => $data]);
+    }
+
+    public function invoicePrint($id){
+        $data = InvoiceHeader::getInvoice($id);
+        // dd($data);
+        $pdf = PDF::loadview('userView.invoicepdf',['data' => $data]);
+        return $pdf->stream($id.'pdf');
     }
 }
