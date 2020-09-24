@@ -41,8 +41,18 @@ class Item extends Model
     }
 
     static public function deleteItem($id){
-        $data = Item::where('id',$id)->first();
+        $data = Item::findItem($id);
         $data->delete();
+    }
+
+    static public function getAllItem(){
+        return Item::all();
+    }
+
+    static public function reduceStock($id, $quantity){
+        $data = Item::findItem($id);
+        $data->stock -= $quantity;
+        $data->save();
     }
 
 }

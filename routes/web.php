@@ -25,6 +25,14 @@ Route::get('/admin/updateitem/{id}','AdminController@updateItemView')->where('id
 Route::patch('/admin/updateitem/{id}','AdminController@updateItem')->where('id','[0-9]+')->name('updateItem');
 Route::delete('/admin/deleteitem/{id}','AdminController@deleteData')->where('id','[0-9]+')->name('deleteItem');
 
+Route::get('/user','UserController@homeView')->name('user');
+Route::post('/user/checkout','UserController@checkOut')->name('checkOut');
+
+Route::group(['prefix' => '', 'middleware' => 'invoice'], function () {
+    Route::get('/user/invoice','UserController@invoiceView')->name('invoiceView');
+    Route::post('/user/invoice/{userID}','UserController@invoice')->name('saveInvoice');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
