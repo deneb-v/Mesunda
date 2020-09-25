@@ -29,7 +29,8 @@ Route::delete('/admin/deleteitem/{id}','AdminController@deleteData')->where('id'
 Route::get('/user','UserController@homeView')->name('user');
 Route::post('/user/checkout','UserController@checkOut')->name('checkOut');
 Route::get('/user/invoicelist','UserController@invoiceListView')->name('invoiceListView');
-Route::get('/user/printInvoice/{id}','UserController@invoicePrint')->name('printInvoice');
+Route::get('/user/printinvoice/{id}','UserController@invoicePrint')->name('printInvoice');
+Route::get('/user/invoicedetail/{id}','UserController@invoiceDetailView')->name('invoiceDetailView');
 
 Route::group(['prefix' => '', 'middleware' => 'invoice'], function () {
     Route::get('/user/invoice','UserController@invoiceView')->name('invoiceView');

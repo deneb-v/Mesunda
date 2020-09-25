@@ -32,7 +32,7 @@
                     <td>{{ $item->address }}</td>
                     <td>{{ $item->postal_code }}</td>
                     <td><a href="{{ route('printInvoice',['id' => $item->id]) }}" class="btn btn-primary btn-block">Print</a></td>
-                    <td><a href="#" class="btn btn-primary btn-block">See detail</a></td>
+                    <td><a href="{{ route('invoiceDetailView',['id' => $item->id]) }}" class="btn btn-primary btn-block">See detail</a></td>
                 </tr>
             @endforeach
             </tbody>

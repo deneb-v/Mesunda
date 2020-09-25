@@ -92,6 +92,12 @@ class UserController extends Controller
         $data = InvoiceHeader::getInvoice($id);
         // dd($data);
         $pdf = PDF::loadview('userView.invoicepdf',['data' => $data]);
+        $pdf->setPaper('A4', 'potrait');
         return $pdf->stream($id.'pdf');
+    }
+
+    public function invoiceDetailView($id){
+        $data = InvoiceHeader::getInvoice($id);
+        return view('userView.invoiceDetail',['data' => $data]);
     }
 }
