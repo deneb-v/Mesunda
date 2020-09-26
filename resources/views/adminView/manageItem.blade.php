@@ -16,7 +16,7 @@
                 {{Session::get('success')}}
             </div>
         @endif
-        <table class="table">
+        <table id="tbl_item" class="table">
             <thead>
                 <tr>
                     {{-- 'name',
@@ -30,6 +30,8 @@
                     <th scope="col">Price</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Photo</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -60,4 +62,12 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('script')
+    <script>
+    $(document).ready(function () {
+        $('#tbl_item').DataTable();
+    });
+    </script>
 @endsection

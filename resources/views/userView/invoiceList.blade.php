@@ -13,7 +13,7 @@
                 {{Session::get('success')}}
             </div>
         @endif
-        <table class="table">
+        <table id="tbl_invoice" class="table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -38,4 +38,12 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready( function () {
+            $('#tbl_invoice').DataTable();
+        } );
+    </script>
 @endsection
