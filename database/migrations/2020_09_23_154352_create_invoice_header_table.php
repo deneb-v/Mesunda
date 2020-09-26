@@ -15,7 +15,7 @@ class CreateInvoiceHeaderTable extends Migration
     {
         Schema::create('invoice_header', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('address');
             $table->string('postal_code');
             $table->timestamps();

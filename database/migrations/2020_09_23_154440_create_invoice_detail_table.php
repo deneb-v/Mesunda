@@ -16,7 +16,7 @@ class CreateInvoiceDetailTable extends Migration
         Schema::create('invoice_detail', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_id');
-            $table->foreign('invoice_id')->references('id')->on('invoice_header');
+            $table->foreign('invoice_id')->references('id')->on('invoice_header')->onDelete('cascade');
             $table->foreignId('item_id')->references('id')->on('item');
             $table->integer('quantity');
         });

@@ -8,6 +8,7 @@ use App\Item;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,9 +33,14 @@ class UserController extends Controller
         $data = $req->data;
         $invoiceID = UserController::generateID();
         $arr = array();
-        foreach ($data as $value) {
-            $item = Item::findItem($value);
-            array_push($arr,$item);
+        if(!empty($data)){
+            foreach ($data as $value) {
+                $item = Item::findItem($value);
+                array_push($arr,$item);
+            }
+        }
+        else{
+            return redirect(route('user'))->with('error','No item selected!');
         }
         // dd($arr);
         return redirect(route('invoiceView'))->with(['data' => $arr,'invoiceID' => $invoiceID]);
@@ -47,8 +53,8 @@ class UserController extends Controller
     public function invoice(Request $req, $userID){
         // dd($req);
         $rules=[
-            'txt_address' => 'required | string',
-            'txt_postalcode' => 'required | integer'
+            'txt_address' => 'required | string | min:5 | max:100',
+            'txt_postalcode' => 'required | string | regex:/^\d+$/ | size:5'
         ];
         $attribute=[
             'txt_address' => 'Address',
@@ -77,14 +83,24 @@ class UserController extends Controller
         $postal_code = $req->txt_postalcode;
         InvoiceHeader::addInvoiceHeader($req->invoiceID, $userID, $address, $postal_code);
         for ($x=0; $x < count($req->item); $x++) {
-            InvoiceDetail::addInvoiceDetail($req->invoiceID, $req->item[$x], $req->quantity[$x]);
-            Item::reduceStock($req->item[$x], $req->quantity[$x]);
+            $acc = Item::reduceStock($req->item[$x], $req->quantity[$x]);
+            // dd($acc);
+            if($acc){
+                // dd(Item::reduceStock($req->item[$x], $req->quantity[$x]));
+                InvoiceDetail::addInvoiceDetail($req->invoiceID, $req->item[$x], $req->quantity[$x]);
+            }else{
+                InvoiceHeader::removeInvoice($req->invoiceID);
+                return redirect(route('user'))->with('error','Sorry the item is out of stock');
+            }
+
         }
+        // dd($req);
         return redirect(route('user'))->with('success','Invoice saved!');
     }
 
     public function invoiceListView(){
-        $data = InvoiceHeader::getAllData();
+        $data = InvoiceHeader::getDatabyUser(Auth::user()->id);
+        // dd($data);
         return view('userView.invoiceList', ['data' => $data]);
     }
 

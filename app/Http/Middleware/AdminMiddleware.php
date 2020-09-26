@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
-class Invoice
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,14 @@ class Invoice
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->session()->has('data')){
-            // dd($request->session()->has('data'));
-            return redirect('/user');
+        if (Auth::check()) {
+            # code...
+            if(Auth::user()->role != 'admin'){
+                return redirect('/');
+            }
+        }
+        else{
+            return redirect('/register');
         }
         return $next($request);
     }

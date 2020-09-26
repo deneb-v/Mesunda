@@ -17,6 +17,11 @@ class InvoiceHeader extends Model
         'postal_code',
     ];
 
+    public static function removeInvoice($invoice_id){
+        $data = InvoiceHeader::where('id',$invoice_id);
+        $data->delete();
+    }
+
     public static function addInvoiceHeader($invoice_id, $user_id, $address, $postal_code){
         InvoiceHeader::create([
             'id' => $invoice_id,
@@ -29,13 +34,10 @@ class InvoiceHeader extends Model
     public static function getAllData(){
         return InvoiceHeader::all();
     }
-    // <th>ID</th>
-    //                 <th>Product Image</th>
-    //                 <th>Product Name</th>
-    //                 <th>Category</th>
-    //                 <th>Quantity</th>
-    //                 <th>Price</th>
-    //                 <th>Sub Total</th>
+
+    public static function getDatabyUser($id){
+        return InvoiceHeader::where('user_id',$id)->get();
+    }
 
     public static function getInvoice($id){
         $data = DB::table('invoice_header as ih')

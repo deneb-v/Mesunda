@@ -26,7 +26,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('saveInvoice',['userID' => 1]) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('saveInvoice',['userID' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <input type="hidden" name="invoiceID" value="{{ $invoiceID }}">
             <table class="table">
@@ -52,8 +52,8 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->category }}</td>
                             <td>
-                                <input name="quantity[]" id="txt_number{{$item->id}}" type="number" min="1" max="{{ $item->stock }}" value="1"
-                                    onchange="quantityChange({{$item->id}},{{$item->price}})">
+                                <input name="quantity[]" id="txt_quantity{{$item->id}}" type="number" min="1" max="{{ $item->stock }}" value="1"
+                                    onchange="quantityChange({{$item->id}},{{$item->price}},{{$item->stock}})">
                             </td>
                             <td>Rp.{{ $item->price }}</td>
                             <td class="subtotal" id="txt_subtotal{{$item->id}}">Rp.{{ $item->price }}</td>
@@ -98,11 +98,11 @@
             document.getElementById('txt_grandTotal').innerHTML = 'Rp.'+grandtotal;
         }
 
-        function quantityChange(id, price){
-            console.log(document.getElementById('txt_number'+id));
-            console.log('id '+id);
-            console.log('price '+price);
-            let quantity = document.getElementById('txt_number'+id).value;
+        function quantityChange(id, price, stock){
+            if (document.getElementById('txt_quantity'+id).value > stock) {
+                document.getElementById('txt_quantity'+id).value = stock;
+            }
+            let quantity = document.getElementById('txt_quantity'+id).value;
             console.log('Rp.'+quantity*price);
             document.getElementById('txt_subtotal'+id).innerHTML = 'Rp.'+quantity*price;
             grandTotal();

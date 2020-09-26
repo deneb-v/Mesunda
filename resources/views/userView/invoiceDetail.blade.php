@@ -42,6 +42,7 @@
                         $grandtotal+=$item->price * $item->quantity;
                     @endphp
                 @endforeach
+
                 <tr>
                     <td></td>
                     <td></td>
@@ -62,30 +63,3 @@
 
 @endsection
 
-@section('script')
-    <script>
-        function grandTotal(){
-            subTotal = document.getElementsByClassName('subtotal');
-            var grandtotal = 0;
-            for(let x=0;x<subTotal.length;x++){
-                let tmp = subTotal[x].innerHTML;
-                tmp = tmp.substring(3);
-                tmp = parseInt(tmp);
-                grandtotal += tmp;
-            }
-            document.getElementById('txt_grandTotal').innerHTML = 'Rp.'+grandtotal;
-        }
-
-        function quantityChange(id, price){
-            console.log(document.getElementById('txt_number'+id));
-            console.log('id '+id);
-            console.log('price '+price);
-            let quantity = document.getElementById('txt_number'+id).value;
-            console.log('Rp.'+quantity*price);
-            document.getElementById('txt_subtotal'+id).innerHTML = 'Rp.'+quantity*price;
-            grandTotal();
-        }
-
-        grandTotal();
-    </script>
-@endsection

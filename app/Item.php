@@ -51,8 +51,16 @@ class Item extends Model
 
     static public function reduceStock($id, $quantity){
         $data = Item::findItem($id);
-        $data->stock -= $quantity;
-        $data->save();
+        // dd($data->stock - $quantity);
+        if($data->stock - $quantity >= 0){
+            $data->stock -= $quantity;
+            $data->save();
+            return true;
+        }
+        else{
+            // dd('asd');
+            return false;
+        }
     }
 
 }

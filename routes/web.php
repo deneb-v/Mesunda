@@ -19,23 +19,30 @@ Route::get('/', function () {
     // return view('userView.invoicepdf');
 });
 
-Route::get('/admin','AdminController@adminView')->name('admin');
-Route::get('/admin/additem','AdminController@addItemView')->name('addItemView');
-Route::post('/admin/additem','AdminController@addItem')->name('addItem');
-Route::get('/admin/updateitem/{id}','AdminController@updateItemView')->where('id','[0-9]+')->name('updateItemView');
-Route::patch('/admin/updateitem/{id}','AdminController@updateItem')->where('id','[0-9]+')->name('updateItem');
-Route::delete('/admin/deleteitem/{id}','AdminController@deleteData')->where('id','[0-9]+')->name('deleteItem');
-
-Route::get('/user','UserController@homeView')->name('user');
-Route::post('/user/checkout','UserController@checkOut')->name('checkOut');
-Route::get('/user/invoicelist','UserController@invoiceListView')->name('invoiceListView');
-Route::get('/user/printinvoice/{id}','UserController@invoicePrint')->name('printInvoice');
-Route::get('/user/invoicedetail/{id}','UserController@invoiceDetailView')->name('invoiceDetailView');
-
-Route::group(['prefix' => '', 'middleware' => 'invoice'], function () {
-    Route::get('/user/invoice','UserController@invoiceView')->name('invoiceView');
-    Route::post('/user/invoice/{userID}','UserController@invoice')->name('saveInvoice');
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::get('/','AdminController@adminView')->name('admin');
+    Route::get('/additem','AdminController@addItemView')->name('addItemView');
+    Route::post('/additem','AdminController@addItem')->name('addItem');
+    Route::get('/updateitem/{id}','AdminController@updateItemView')->where('id','[0-9]+')->name('updateItemView');
+    Route::patch('/updateitem/{id}','AdminController@updateItem')->where('id','[0-9]+')->name('updateItem');
+    Route::delete('/deleteitem/{id}','AdminController@deleteData')->where('id','[0-9]+')->name('deleteItem');
 });
+
+
+Route::group(['prefix' => 'user', 'middleware' => 'user'], function () {
+    Route::get('/','UserController@homeView')->name('user');
+    Route::post('/checkout','UserController@checkOut')->name('checkOut');
+    Route::get('/invoicelist','UserController@invoiceListView')->name('invoiceListView');
+    Route::get('/printinvoice/{id}','UserController@invoicePrint')->name('printInvoice');
+    Route::get('/invoicedetail/{id}','UserController@invoiceDetailView')->name('invoiceDetailView');
+
+    Route::group(['prefix' => 'invoice'], function () {
+        Route::get('/','UserController@invoiceView')->name('invoiceView')->middleware('invoice');
+        Route::post('/{userID}','UserController@invoice')->name('saveInvoice');
+    });
+});
+
+
 
 Auth::routes();
 
