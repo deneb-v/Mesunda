@@ -61,7 +61,6 @@ class AdminController extends Controller
             'integer' => ':attribute must be integer.',
             'notin' => ':attribute is required.',
         ];
-        // dd($rules);
         $this->validate($req,$rules,$messages,$attributes);
 
         // 'name',
@@ -93,13 +92,26 @@ class AdminController extends Controller
     }
 
     public function updateItem($id, Request $req){
-        $rules =[
-            'txt_name' => 'required | string | min:5 | max:80 ',
-            'txt_category' => 'required | string ',
-            'txt_price' => 'required | integer',
-            'txt_stock' => 'required | integer',
-            'img_product' => 'image|mimes:jpeg,png',
-        ];
+        $rules = [];
+        if ($req->category == 'other') {
+            $rules =[
+                'txt_name' => 'required | string | min:5 | max:80 ',
+                'txt_category' => 'required | string ',
+                'txt_price' => 'required | integer',
+                'txt_stock' => 'required | integer',
+                'img_product' => 'image|mimes:jpeg,png',
+            ];
+        }
+        else{
+            $rules =[
+                'txt_name' => 'required | string | min:5 | max:80 ',
+                'category' => 'notin:zero',
+                'txt_price' => 'required | integer',
+                'txt_stock' => 'required | integer',
+                'img_product' => 'image|mimes:jpeg,png',
+            ];
+        }
+
         $attributes=[
             'txt_name' => 'Product name',
             'txt_category' => 'Category',
@@ -125,7 +137,13 @@ class AdminController extends Controller
         // 'stock',
         // 'photo'
         $name = $req->txt_name;
-        $category = $req->txt_category;
+        $category = '';
+        if($req->category!='other'){
+            $category = $req->category;
+        }
+        else{
+            $category = $req->txt_category;
+        }
         $price = $req->txt_price;
         $stock = $req->txt_stock;
 

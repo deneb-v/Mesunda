@@ -17,7 +17,7 @@ class CreateInvoiceDetailTable extends Migration
             $table->id();
             $table->string('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoice_header')->onDelete('cascade');
-            $table->foreignId('item_id')->references('id')->on('item');
+            $table->foreignId('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('quantity');
         });
     }

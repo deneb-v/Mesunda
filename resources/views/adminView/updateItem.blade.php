@@ -93,7 +93,7 @@
         var found = false;
         console.log('{{$data->category}}');
         for(var x=0; x<opt.length ;x++){
-            if(opt.value === '{{$data->category}}'){
+            if(opt[x].value === '{{$data->category}}'){
                 sel.selectedIndex = x;
                 found=true;
             }
