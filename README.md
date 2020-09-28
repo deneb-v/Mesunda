@@ -7,11 +7,11 @@ BNCC Praetorian Web Programming Training Final Project.
 - [Composer](https://getcomposer.org/download/)
 
 ## First time configuration
-1. Open XAMPP control panel then start Apache and Mysql module
-2. Open http://localhost/phpmyadmin/ then create new database for this project
+1. Open XAMPP control panel then start Apache and Mysql module.
+2. Open http://localhost/phpmyadmin/ then create new database for this project.
 3. Clone / download this project.
-4. Open project file folder and duplicate `.env.example` file 
-5. Rename the duplicated file to `.env` then open the file
+4. Open project file folder and duplicate `.env.example` file.
+5. Rename the duplicated file to `.env` then open the file.
 6. Look for this section
     ```
     DB_CONNECTION=mysql
@@ -21,8 +21,8 @@ BNCC Praetorian Web Programming Training Final Project.
     DB_USERNAME=root
     DB_PASSWORD=
     ```
-7. then replace `DB_DATABASE=laravel` into `DB_DATABASE=[The Database Name That You Created]` (example: `DB_DATABASE=mesunda`)
-8. Open Command Prompt at the project file directory
+7. Then replace `DB_DATABASE=laravel` into `DB_DATABASE=[The Database Name That You Created]` (example: `DB_DATABASE=mesunda`).
+8. Open Command Prompt at the project file directory.
 9. Run this command
     ```
     composer install
@@ -32,8 +32,8 @@ BNCC Praetorian Web Programming Training Final Project.
     ```
 
 ## How to run this project
-1. Open XAMPP control panel then start Apache and Mysql module
-2. Open Command Prompt at the project file directory
+1. Open XAMPP control panel then start Apache and Mysql module.
+2. Open Command Prompt at the project file directory.
 3. Run this command
     ```
     php artisan serve
