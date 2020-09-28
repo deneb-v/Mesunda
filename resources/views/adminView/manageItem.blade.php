@@ -43,10 +43,12 @@
                     <td>{{ $item->price }}</td>
                     <td>{{ $item->stock }}</td>
                     <td>
-                        @if ($item->photo == null)
-                            No Photo
+                        @if ($item->photo == '')
+                            <div class="d-flex align-items-center justify-content-center" style="height:160px; width:160px; background-color: #C1CDCD">
+                                <p class="text-center p-0 m-0">No Image</p>
+                            </div>
                         @else
-                            <img src="{{asset('storage/'.$item->photo)}}" alt="img" srcset="" width="160px">
+                            <img src="{{ asset('storage/'.$item->photo) }}" alt="" width="160px">
                         @endif
                     </td>
                     <td><a href="{{ route('updateItemView',['id' => $item->id]) }}" class="btn btn-primary btn-block">Edit</a></td>

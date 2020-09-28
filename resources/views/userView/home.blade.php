@@ -29,7 +29,13 @@
             @foreach ($data as $item)
                 <div class="col-4 mt-3 d-flex justify-content-center">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{asset('storage/'.$item->photo)}}" class="card-img-top" alt="Product Image" style="object-fit: cover; height: 200px">
+                        @if ($item->photo == '')
+                            <div class="d-flex align-items-center justify-content-center" style="height:200px; background-color: #C1CDCD">
+                                <p class="text-center p-0 m-0">No Image</p>
+                            </div>
+                        @else
+                            <img src="{{asset('storage/'.$item->photo)}}" class="card-img-top" alt="Product Image" style="object-fit: cover; height: 200px">
+                        @endif
                         <div class="card-body">
                             <h5 class="card-title">
                                 {{ $item->name }}

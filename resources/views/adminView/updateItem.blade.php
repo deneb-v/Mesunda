@@ -68,9 +68,17 @@
             <div class="form-group">
                 <div>
                     <label>Current Product Image</label>
-                    <img src="{{ asset('storage/'.$data->photo) }}" alt="" srcset="" width="160px">
+                    @if ($data->photo == '')
+                        <div class="d-flex align-items-center justify-content-center" style="height:160px; width:160px; background-color: #C1CDCD">
+                            <p class="text-center p-0 m-0">No Image</p>
+                        </div>
+                    @else
+                        <div>
+                            <img src="{{ asset('storage/'.$data->photo) }}" alt="" width="160px">
+                        </div>
+                    @endif
                 </div>
-                <label>New Product Image</label>
+                <label class="mt-3">New Product Image</label>
                 <input name="img_product" type="file" class="form-control-file" id="img_product">
             </div>
             <button type="submit" name="" id="" class="btn btn-primary" btn-lg btn-block">Update Item</button>

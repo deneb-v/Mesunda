@@ -30,7 +30,13 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>
-                                <img src="{{ public_path().'/storage/'.$item->photo }}" alt="" width="100px" height="100px">
+                                @if ($item->photo == '')
+                                    <div class="d-flex align-items-center justify-content-center" style="height:100px; width:100px; background-color: #C1CDCD">
+                                        <p class="text-center p-0 m-0">No Image</p>
+                                    </div>
+                                @else
+                                    <img src="{{ public_path().'/storage/'.$item->photo }}" alt="" width="100px" height="100px">
+                                @endif
                             </td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->category }}</td>
